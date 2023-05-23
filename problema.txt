@@ -1,0 +1,23 @@
+Título del Proyecto: **Sistema de gestión de mantenimiento de flota de vehículos**
+
+**1) Descripción del problema**
+
+Las empresas de transporte a menudo tienen una flota de vehículos que requieren un mantenimiento regular para asegurar su buen funcionamiento y seguridad. Este mantenimiento incluye tareas regulares, como cambios de aceite, rotaciones de neumáticos y revisiones de seguridad, así como reparaciones imprevistas. Es un desafío gestionar el mantenimiento de una flota grande, ya que es necesario realizar un seguimiento de cuándo se necesita cada tipo de servicio para cada vehículo, cuánto cuesta, y cuándo estará el vehículo fuera de servicio para el mantenimiento. 
+
+**2) Objetivo**
+
+El objetivo de este proyecto es desarrollar un sistema que permita a las empresas de transporte gestionar el mantenimiento de sus flotas de vehículos de forma eficiente y eficaz.
+
+**3) Obstáculos**
+
+Los desafíos a superar incluyen la gestión de múltiples vehículos con diferentes necesidades de mantenimiento, la programación de servicios sin interrumpir las operaciones de la empresa y el seguimiento de los costos de mantenimiento.
+
+**4) Pregunta guía**
+
+¿Cómo puede un sistema de gestión de mantenimiento de flota ayudar a las empresas de transporte a programar y realizar un seguimiento del mantenimiento de sus vehículos, al tiempo que minimiza las interrupciones en sus operaciones y mantiene los costos bajo control?
+
+**5) Datos relevantes**
+
+Las empresas de transporte suelen operar flotas de decenas, cientos o incluso miles de vehículos, todos los cuales necesitan mantenimiento regular y ocasionalmente reparaciones. Las interrupciones en las operaciones de los vehículos pueden costar a estas empresas miles o decenas de miles de dólares al día.
+
+Este proyecto será evaluado basándose en su capacidad para manejar de manera eficiente la programación del mantenimiento de los vehículos, el seguimiento de los costos y la minimización de las interrupciones en las operaciones. Deberá demostrar el uso de los conceptos de la POO, la implementación de cierre de funciones, el uso de las colecciones provistas por Go, el correcto comentario del código, la implementación de la concurrencia y el manejo de condiciones de carrera y bloqueos.
