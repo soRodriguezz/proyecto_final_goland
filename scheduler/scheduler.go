@@ -2,9 +2,10 @@ package scheduler
 
 import (
 	"fmt"
-	"proyecto_final_goland/vehicle"
 	"sync"
 	"time"
+
+	"proyecto_final_goland/vehicle"
 )
 
 type Scheduler struct {
@@ -21,21 +22,37 @@ func NewScheduler(vehicles []*vehicle.Vehicle) *Scheduler {
 }
 
 func (s *Scheduler) ScheduleMaintenance() {
+	var wg sync.WaitGroup
+
 	for _, v := range s.Vehicles {
+		wg.Add(1)
 		go func(v *vehicle.Vehicle) {
+			defer wg.Done()
 			if v.NeedsService(time.Now()) {
 				s.Mu.Lock()
-				// Crea un nuevo mantenimiento y añádelo a la lista de mantenimientos
-				maintenance := &vehicle.Maintenance{
-					ID:        v.ID,
-					Cost:      100.0, // Puedes reemplazar esto por un valor real
-					StartTime: time.Now(),
-					Duration:  1 * time.Hour, // Puedes reemplazar esto por un valor real
-				}
+				maintenance := vehicle.NewMaintenance(v.ID, 100.0, time.Now(), 1*time.Hour)
 				s.Maintenance = append(s.Maintenance, maintenance)
 				fmt.Printf("El vehículo con ID: %s necesita mantenimiento\n", v.ID)
 				s.Mu.Unlock()
 			}
 		}(v)
 	}
+	wg.Wait()
+}
+
+func (s *Scheduler) ScheduleMaintenanceAt(v *vehicle.Vehicle, t time.Time) {
+	maintenance := vehicle.NewMaintenance(v.ID, 100.0, t, 1*time.Hour)
+	s.Maintenance = append(s.Maintenance, maintenance)
+}
+
+func (s *Scheduler) FinishMaintenance(m *vehicle.Maintenance) {
+	m.FinishMaintenance()
+}
+
+func (s *Scheduler) TotalMaintenanceCost() float64 {
+	totalCost := 0.0
+	for _, m := range s.Maintenance {
+		totalCost += m.Cost
+	}
+	return totalCost
 }

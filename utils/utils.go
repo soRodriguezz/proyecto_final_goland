@@ -15,10 +15,10 @@ func InputValidation() (string, time.Time, time.Duration) {
 	var lastService string
 	var intervalHours float64
 
-	fmt.Println("Por favor, introduzca el ID del vehículo:")
+	fmt.Print("Por favor, introduzca el ID del vehículo: ")
 	fmt.Scanln(&id)
 
-	fmt.Println("Introduzca la fecha del último servicio (YYYY-MM-DD):")
+	fmt.Print("Introduzca la fecha del último servicio (YYYY-MM-DD): ")
 	fmt.Scanln(&lastService)
 
 	lastServiceTime, err := time.Parse("2006-01-02", lastService)
@@ -27,7 +27,7 @@ func InputValidation() (string, time.Time, time.Duration) {
 		return InputValidation()
 	}
 
-	fmt.Println("Por favor, introduzca el intervalo de servicio en horas:")
+	fmt.Print("Por favor, introduzca el intervalo de servicio en horas: ")
 	fmt.Scanln(&intervalHours)
 
 	interval := time.Duration(intervalHours) * time.Hour
