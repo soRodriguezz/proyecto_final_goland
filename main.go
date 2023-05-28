@@ -15,28 +15,28 @@ import (
 )
 
 func main() {
-	// Crear instancia de Customer
+	// Crea instancia de Customer
 	cust := customer.NewCustomer("John Doe", "+1234567890")
 
-	// Crear instancias de Vehicle
+	// Crea instancias de Vehicle
 	vehicles := []*vehicle.Vehicle{
 		vehicle.NewVehicle("V1", time.Now().Add(-time.Hour*25), time.Hour*24),
 		vehicle.NewVehicle("V2", time.Now().Add(-time.Hour*25), time.Hour*24),
 	}
 
-	// Crear instancias de Service
+	// Crea instancias de Service
 	services := []*service.Service{
 		service.NewService("Oil Change", 50.0),
 		service.NewService("Tire Rotation", 30.0),
 	}
 
-	// Crear instancias de Shop
+	// Crea instancias de Shop
 	shops := []*shop.Shop{
 		shop.NewShop("AutoCare Center", "123 Main St"),
 		shop.NewShop("Quick Fix Garage", "456 Elm St"),
 	}
 
-	// Crear instancia de Scheduler
+	// Crea instancia de Scheduler
 	s := scheduler.NewScheduler(vehicles)
 
 	// Programar mantenimiento
