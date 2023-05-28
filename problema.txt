@@ -2,7 +2,12 @@ Título del Proyecto: **Sistema de gestión de mantenimiento de flota de vehícu
 
 **1) Descripción del problema**
 
-Las empresas de transporte a menudo tienen una flota de vehículos que requieren un mantenimiento regular para asegurar su buen funcionamiento y seguridad. Este mantenimiento incluye tareas regulares, como cambios de aceite, rotaciones de neumáticos y revisiones de seguridad, así como reparaciones imprevistas. Es un desafío gestionar el mantenimiento de una flota grande, ya que es necesario realizar un seguimiento de cuándo se necesita cada tipo de servicio para cada vehículo, cuánto cuesta, y cuándo estará el vehículo fuera de servicio para el mantenimiento. 
+Las empresas de transporte a menudo tienen una flota de vehículos que requieren un mantenimiento
+regular para asegurar su buen funcionamiento y seguridad.
+Este mantenimiento incluye tareas regulares, como cambios de aceite, rotaciones de neumáticos y
+revisiones de seguridad, así como reparaciones imprevistas. Es un desafío gestionar el mantenimiento
+de una flota grande, ya que es necesario realizar un seguimiento de cuándo se necesita cada tipo de
+servicio para cada vehículo, cuánto cuesta, y cuándo estará el vehículo fuera de servicio para el mantenimiento.
 
 **2) Objetivo**
 
@@ -19,5 +24,3 @@ Los desafíos a superar incluyen la gestión de múltiples vehículos con difere
 **5) Datos relevantes**
 
 Las empresas de transporte suelen operar flotas de decenas, cientos o incluso miles de vehículos, todos los cuales necesitan mantenimiento regular y ocasionalmente reparaciones. Las interrupciones en las operaciones de los vehículos pueden costar a estas empresas miles o decenas de miles de dólares al día.
-
-Este proyecto será evaluado basándose en su capacidad para manejar de manera eficiente la programación del mantenimiento de los vehículos, el seguimiento de los costos y la minimización de las interrupciones en las operaciones. Deberá demostrar el uso de los conceptos de la POO, la implementación de cierre de funciones, el uso de las colecciones provistas por Go, el correcto comentario del código, la implementación de la concurrencia y el manejo de condiciones de carrera y bloqueos.

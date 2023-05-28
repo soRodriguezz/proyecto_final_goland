@@ -2,6 +2,9 @@ package utils
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+	"text/tabwriter"
 	"time"
 )
 
@@ -10,27 +13,21 @@ func TimeToDuration(t time.Time) time.Duration {
 	return now.Sub(t)
 }
 
-func InputValidation() (string, time.Time, time.Duration) {
-	var id string
-	var lastService string
-	var intervalHours float64
+func PausedConsole() {
+	fmt.Println("\nPresione Enter para continuar...")
+	fmt.Scanln()
+}
 
-	fmt.Print("Por favor, introduzca el ID del vehículo: ")
-	fmt.Scanln(&id)
+func ClearConsole() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
 
-	fmt.Print("Introduzca la fecha del último servicio (YYYY-MM-DD): ")
-	fmt.Scanln(&lastService)
+func CreateTabs() *tabwriter.Writer {
+	// Configura tabla con tabulaciones
+	w := new(tabwriter.Writer)
+	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
 
-	lastServiceTime, err := time.Parse("2006-01-02", lastService)
-	if err != nil {
-		fmt.Println("Fecha inválida, por favor intente de nuevo.")
-		return InputValidation()
-	}
-
-	fmt.Print("Por favor, introduzca el intervalo de servicio en horas: ")
-	fmt.Scanln(&intervalHours)
-
-	interval := time.Duration(intervalHours) * time.Hour
-
-	return id, lastServiceTime, interval
+	return w
 }
