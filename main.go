@@ -14,6 +14,7 @@ func main() {
 	utils.ClearConsole()
 
 	service.ServicesConstuct()
+	shop.ShopConstuct()
 
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -22,7 +23,7 @@ func main() {
 		fmt.Println("=== Sistema de gestión de mantenimiento de flota de vehículos ===")
 		fmt.Println("1. Programar mantenimiento")
 		fmt.Println("2. Servicios")
-		fmt.Println("3. Ver tiendas operativas")
+		fmt.Println("3. Tiendas")
 		fmt.Println("4. Salir")
 		fmt.Print("Ingrese su opción: ")
 
@@ -35,7 +36,7 @@ func main() {
 		case "2":
 			service.Services()
 		case "3":
-			shop.CreateShop()
+			shop.Shops()
 		case "4":
 			fmt.Println("Saliendo...")
 			return
