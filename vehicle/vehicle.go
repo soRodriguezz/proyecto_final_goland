@@ -22,16 +22,14 @@ func (v *Vehicle) NeedsService(currentTime time.Time) bool {
 
 type Maintenance struct {
 	ID        string
-	Cost      float64
 	StartTime time.Time
 	Duration  time.Duration
 	Finished  bool
 }
 
-func NewMaintenance(id string, cost float64, startTime time.Time, duration time.Duration) *Maintenance {
+func NewMaintenance(id string, startTime time.Time, duration time.Duration) *Maintenance {
 	return &Maintenance{
 		ID:        id,
-		Cost:      cost,
 		StartTime: startTime,
 		Duration:  duration,
 		Finished:  false,

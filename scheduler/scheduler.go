@@ -34,7 +34,7 @@ func (s *Scheduler) ScheduleMaintenance() {
 			defer wg.Done()
 			if v.NeedsService(time.Now()) {
 				s.Mu.Lock()
-				maintenance := vehicle.NewMaintenance(v.ID, 100.0, time.Now(), 1*time.Hour)
+				maintenance := vehicle.NewMaintenance(v.ID, time.Now(), 1*time.Hour)
 				s.Maintenance = append(s.Maintenance, maintenance)
 				fmt.Printf("El vehículo con ID: %s necesita mantenimiento\n", v.ID)
 				s.Mu.Unlock()
@@ -46,21 +46,11 @@ func (s *Scheduler) ScheduleMaintenance() {
 
 // ScheduleMaintenanceAt es una función que programa un mantenimiento para un vehículo en un tiempo específico.
 func (s *Scheduler) ScheduleMaintenanceAt(v *vehicle.Vehicle, t time.Time) {
-	maintenance := vehicle.NewMaintenance(v.ID, 100.0, t, 1*time.Hour)
+	maintenance := vehicle.NewMaintenance(v.ID, t, 1*time.Hour)
 	s.Maintenance = append(s.Maintenance, maintenance)
 }
 
 // FinishMaintenance es una función que marca un mantenimiento como finalizado.
-
 func (s *Scheduler) FinishMaintenance(m *vehicle.Maintenance) {
 	m.FinishMaintenance()
-}
-
-// TotalMaintenanceCost es una función que calcula y devuelve el costo total de todos los mantenimientos programados.
-func (s *Scheduler) TotalMaintenanceCost() float64 {
-	totalCost := 0.0
-	for _, m := range s.Maintenance {
-		totalCost += m.Cost
-	}
-	return totalCost
 }

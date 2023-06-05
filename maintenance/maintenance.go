@@ -6,6 +6,8 @@ import (
 	"proyecto_final_goland/scheduler"
 	"proyecto_final_goland/utils"
 	"proyecto_final_goland/vehicle"
+	"proyecto_final_goland/service"
+	"proyecto_final_goland/shop"
 	"time"
 )
 
@@ -74,30 +76,30 @@ func CreateMaintenance() {
 	// Validación de entrada para agregar nuevo vehículo
 	input := NewMaintenance()
 
+	// Obtener servicio seleccionado
+	serviceSelect := service.MaintenanceService()
+
+	// Obtener tienda seleccionada
+	shopSelect := shop.MaintenanceShop()
+	utils.ClearConsole()
+
 	cust := customer.NewCustomer(input.NameCustomer, input.PhoneCustomer)
 	newVehicle := vehicle.NewVehicle(input.Id, input.LastServiceTime, input.Interval)
 	s.Vehicles = append(s.Vehicles, newVehicle)
 
 	// Programa mantenimiento para el nuevo vehículo
-	s.ScheduleMaintenanceAt(newVehicle, time.Now().Add(time.Hour*2))
+	s.ScheduleMaintenanceAt(newVehicle, time.Now())
 
 	// Crea tabs
 	w := utils.CreateTabs()
 
 	// Mostrar mantenimiento programado después de agregar nuevo vehículo y finalizar un mantenimiento
-	fmt.Fprintln(w, "\nID Vehiculo\tCosto\tHora Inicio\tDuraciín\tTerminado\tNombre\tTelefono")
+	fmt.Fprintln(w, "\nID Vehiculo\tCosto\tHora Inicio\tDuración\tNombre\tTelefono\tServicio\tTienda")
 	for _, m := range s.Maintenance {
-		var finished string = "NO"
-		if m.Finished {
-			finished = "SI"
-		}
-		fmt.Fprintf(w, "%s\t%.2f\t%s\t%.0f minutes\t%s\t%s\t%s\n", m.ID, m.Cost, m.StartTime.Format(time.RFC3339), m.Duration.Minutes(), finished, cust.Name, cust.Phone)
+		fmt.Fprintf(w, "%s\t%d\t%s\t%.0f minutes\t%s\t%s\t%s\t%s\n", m.ID, serviceSelect.Price, m.StartTime.Format("02-01-2006 15:04:05"), m.Duration.Minutes(), cust.Name, cust.Phone, serviceSelect.Name, shopSelect.Name)
 	}
 
 	w.Flush()
-
-	// Calcular el costo total de mantenimiento
-	fmt.Printf("\nCosto total del mantenimiento: %.2f\n", s.TotalMaintenanceCost())
 
 	utils.PausedConsole()
 	utils.ClearConsole()

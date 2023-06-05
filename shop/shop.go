@@ -11,16 +11,41 @@ import (
 var ShopsArr []*shop
 
 type shop struct {
-	id       int
-	name     string
-	location string
+	Id       int
+	Name     string
+	Location string
 }
 
 func newShop(id int, name string, location string) *shop {
 	return &shop{
-		id:       id,
-		name:     name,
-		location: location,
+		Id:       id,
+		Name:     name,
+		Location: location,
+	}
+}
+
+func MaintenanceShop() shop {
+	var idShop string
+	var shopSelect *shop
+
+	listShop()
+
+	fmt.Print("\nIntroduzca el ID de la tienda a seleccionar: ")
+	fmt.Scanln(&idShop)
+
+	id, _ := strconv.Atoi(idShop)
+
+	for i := 0; i < len(ShopsArr); i++ {
+		if ShopsArr[i].Id == id {
+			shopSelect = ShopsArr[i]
+			break
+		}
+	}
+
+	return shop {
+		Id: shopSelect.Id,
+		Name: shopSelect.Name,
+		Location: shopSelect.Location,
 	}
 }
 
@@ -55,7 +80,7 @@ func listShop() {
 	fmt.Println("Tiendas operativas: ")
 	fmt.Fprintln(w, "\nID\tNombre\tDirección")
 	for _, svc := range ShopsArr {
-		fmt.Fprintf(w, "%d\t%s\t%s\n", svc.id, svc.name, svc.location)
+		fmt.Fprintf(w, "%d\t%s\t%s\n", svc.Id, svc.Name, svc.Location)
 	}
 
 	w.Flush()
@@ -73,7 +98,7 @@ func createShop() {
 	fmt.Print("Introduzca la ubicación de la tienda: ")
 	fmt.Scanln(&location)
 
-	newShopInput := newShop(ShopsArr[len(ShopsArr)-1].id+1, name, location)
+	newShopInput := newShop(ShopsArr[len(ShopsArr)-1].Id+1, name, location)
 	ShopsArr = append(ShopsArr, newShopInput)
 
 }
@@ -91,7 +116,7 @@ func deleteShop() {
 
 	// Buscar el objeto por su ID y eliminarlo
 	for i := 0; i < len(ShopsArr); i++ {
-		if ShopsArr[i].id == id {
+		if ShopsArr[i].Id == id {
 			flag = true
 			ShopsArr = append(ShopsArr[:i], ShopsArr[i+1:]...)
 			break

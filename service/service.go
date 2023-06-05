@@ -8,30 +8,55 @@ import (
 	"strconv"
 )
 
-var ServicesArr []*service
+var ServicesArr []Service
 
-type service struct {
-	id    int
-	name  string
-	price int
+type Service struct {
+	Id    int
+	Name  string
+	Price int
 }
 
-func newService(id int, name string, price int) *service {
-	return &service{
-		id:    id,
-		name:  name,
-		price: price,
+func NewService(id int, name string, price int) Service {
+	return Service{
+		Id:    id,
+		Name:  name,
+		Price: price,
 	}
 }
 
-func ServicesConstuct() []*service {
+func MaintenanceService() Service {
+	var idService string
+	var serviceSelect Service
 
-	servicioUno := newService(1, "Cambio de aceite", 50000)
-	servicioDos := newService(2, "Rotación de neumáticos", 30000)
-	servicioTres := newService(3, "Alineación de ruedas", 14000)
-	servicioCuatro := newService(4, "Cambio de bujías", 11000)
-	servicioCinco := newService(5, "Cambio de batería", 5000)
-	servicioSeis := newService(6, "Revisión de frenos", 34000)
+	ListServices()
+
+	fmt.Print("\nIntroduzca el ID del servicio a seleccionar: ")
+	fmt.Scanln(&idService)
+
+	id, _ := strconv.Atoi(idService)
+
+	for i := 0; i < len(ServicesArr); i++ {
+		if ServicesArr[i].Id == id {
+			serviceSelect = ServicesArr[i]
+			break
+		}
+	}
+
+	return Service {
+		Id: serviceSelect.Id,
+		Name: serviceSelect.Name,
+		Price: serviceSelect.Price,
+	}
+}
+
+func ServicesConstuct() []Service {
+
+	servicioUno := NewService(1, "Cambio de aceite", 50000)
+	servicioDos := NewService(2, "Rotación de neumáticos", 30000)
+	servicioTres := NewService(3, "Alineación de ruedas", 14000)
+	servicioCuatro := NewService(4, "Cambio de bujías", 11000)
+	servicioCinco := NewService(5, "Cambio de batería", 5000)
+	servicioSeis := NewService(6, "Revisión de frenos", 34000)
 
 	ServicesArr = append(ServicesArr, servicioUno)
 	ServicesArr = append(ServicesArr, servicioDos)
@@ -43,17 +68,17 @@ func ServicesConstuct() []*service {
 	return ServicesArr
 }
 
-func listServices() {
+func ListServices() {
 	utils.ClearConsole()
 
 	// Crea tabs
 	w := utils.CreateTabs()
 
 	// Mostrar servicios disponibles
-	fmt.Println("Servicios disponibles: ")
+	fmt.Println("Seleccione el servicio: ")
 	fmt.Fprintln(w, "\nID\tNombre\tPrecio")
 	for _, svc := range ServicesArr {
-		fmt.Fprintf(w, "%d\t%s\t%d\n", svc.id, svc.name, svc.price)
+		fmt.Fprintf(w, "%d\t%s\t%d\n", svc.Id, svc.Name, svc.Price)
 	}
 
 	w.Flush()
@@ -71,7 +96,7 @@ func createServices() {
 	fmt.Print("Introduzca el precio del servicio: ")
 	fmt.Scanln(&price)
 
-	newServiceInput := newService(ServicesArr[len(ServicesArr)-1].id+1, name, price)
+	newServiceInput := NewService(ServicesArr[len(ServicesArr)-1].Id+1, name, price)
 	ServicesArr = append(ServicesArr, newServiceInput)
 
 }
@@ -80,7 +105,7 @@ func deleteServices() {
 	var idInput string
 	flag := false
 
-	listServices()
+	ListServices()
 
 	fmt.Print("\nIntroduzca el ID del servicio a eliminar: ")
 	fmt.Scanln(&idInput)
@@ -89,7 +114,7 @@ func deleteServices() {
 
 	// Buscar el objeto por su ID y eliminarlo
 	for i := 0; i < len(ServicesArr); i++ {
-		if ServicesArr[i].id == id {
+		if ServicesArr[i].Id == id {
 			flag = true
 			ServicesArr = append(ServicesArr[:i], ServicesArr[i+1:]...)
 			break
@@ -127,12 +152,12 @@ func Services() {
 
 		switch option {
 		case "1":
-			listServices()
+			ListServices()
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "2":
 			createServices()
-			listServices()
+			ListServices()
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "3":
