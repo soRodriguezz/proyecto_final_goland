@@ -21,7 +21,7 @@ func main() {
 	// Crea menú para opciones de la aplicación
 	for {
 		fmt.Println("=== Sistema de gestión de mantenimiento de flota de vehículos ===")
-		fmt.Println("1. Programar mantenimiento")
+		fmt.Println("1. Mantenimientos")
 		fmt.Println("2. Servicios")
 		fmt.Println("3. Tiendas")
 		fmt.Println("4. Salir")
@@ -32,7 +32,7 @@ func main() {
 
 		switch option {
 		case "1":
-			maintenance.CreateMaintenance()
+			maintenance.Maintenances()
 		case "2":
 			service.Services()
 		case "3":
