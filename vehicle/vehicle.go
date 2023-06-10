@@ -17,7 +17,3 @@ func NewVehicle(id string, timeService time.Time, interval time.Duration) Vehicl
 		ServiceInterval: interval,
 	}
 }
-
-func (v *Vehicle) NeedsService(currentTime time.Time) bool {
-	return currentTime.Sub(v.LastService) > v.ServiceInterval
-}
