@@ -24,7 +24,10 @@ func newShop(id int, name string, location string) *shop {
 	}
 }
 
-func MaintenanceShop() shop {
+/*
+ * Obtiene el objeto de una tienda por ID
+ */
+func MaintenanceShop() *shop {
 	var idShop string
 	var shopSelect *shop
 
@@ -42,15 +45,17 @@ func MaintenanceShop() shop {
 		}
 	}
 
-	return shop {
-		Id: shopSelect.Id,
-		Name: shopSelect.Name,
+	return &shop{
+		Id:       shopSelect.Id,
+		Name:     shopSelect.Name,
 		Location: shopSelect.Location,
 	}
 }
 
-func ShopConstuct() []*shop {
-
+/*
+ * Crea objeto de inicio para rellenar tiendas
+ */
+func ShopInit() []*shop {
 	shopUno := newShop(1, "Centro de Servicio Automotriz 'Autotec'", "Santiago, Chile")
 	shopDos := newShop(2, "Taller Mecánico 'Mecánica Rápida'", "Valparaíso, Chile")
 	shopTres := newShop(3, "Garaje 'Mantenimiento Total'", "Concepción, Chile")
@@ -70,13 +75,14 @@ func ShopConstuct() []*shop {
 	return ShopsArr
 }
 
+/*
+ * 	Muestra tiendas disponibles de la empresa
+ */
 func listShop() {
 	utils.ClearConsole()
 
-	// Crea tabs
 	w := utils.CreateTabs()
 
-	// Mostrar servicios disponibles
 	fmt.Println("Tiendas operativas: ")
 	fmt.Fprintln(w, "\nID\tNombre\tDirección")
 	for _, svc := range ShopsArr {
@@ -86,6 +92,9 @@ func listShop() {
 	w.Flush()
 }
 
+/*
+ * Crea una tienda nueva para la empresa
+ */
 func createShop() {
 	utils.ClearConsole()
 
@@ -103,6 +112,9 @@ func createShop() {
 
 }
 
+/*
+ * Hace un hard delete para una tienda de la empresa
+ */
 func deleteShop() {
 	var idInput string
 	flag := false
@@ -114,7 +126,6 @@ func deleteShop() {
 
 	id, _ := strconv.Atoi(idInput)
 
-	// Buscar el objeto por su ID y eliminarlo
 	for i := 0; i < len(ShopsArr); i++ {
 		if ShopsArr[i].Id == id {
 			flag = true
@@ -135,7 +146,10 @@ func deleteShop() {
 	utils.ClearConsole()
 }
 
-func Shops() {
+/*
+ * Crea menu de opciones de las tiendas
+ */
+func ShopsOpt() {
 	utils.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -160,6 +174,7 @@ func Shops() {
 		case "2":
 			createShop()
 			listShop()
+			fmt.Println("\nTienda agregada!")
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "3":
@@ -172,7 +187,5 @@ func Shops() {
 			utils.PausedConsole()
 			utils.ClearConsole()
 		}
-
-		fmt.Println()
 	}
 }

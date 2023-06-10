@@ -8,27 +8,30 @@ import (
 	"strconv"
 )
 
-var ServicesArr []Service
+var ServicesArr []*service
 
-type Service struct {
+type service struct {
 	Id    int
 	Name  string
 	Price int
 }
 
-func NewService(id int, name string, price int) Service {
-	return Service{
+func newService(id int, name string, price int) *service {
+	return &service{
 		Id:    id,
 		Name:  name,
 		Price: price,
 	}
 }
 
-func MaintenanceService() Service {
+/*
+ * Selecciona un objeto de servicio por ID
+ */
+func MaintenanceService() *service {
 	var idService string
-	var serviceSelect Service
+	var serviceSelect service
 
-	ListServices()
+	listServices()
 
 	fmt.Print("\nIntroduzca el ID del servicio a seleccionar: ")
 	fmt.Scanln(&idService)
@@ -37,26 +40,29 @@ func MaintenanceService() Service {
 
 	for i := 0; i < len(ServicesArr); i++ {
 		if ServicesArr[i].Id == id {
-			serviceSelect = ServicesArr[i]
+			serviceSelect = *ServicesArr[i]
 			break
 		}
 	}
 
-	return Service {
-		Id: serviceSelect.Id,
-		Name: serviceSelect.Name,
+	return &service{
+		Id:    serviceSelect.Id,
+		Name:  serviceSelect.Name,
 		Price: serviceSelect.Price,
 	}
 }
 
-func ServicesConstuct() []Service {
+/*
+ * Llenar colección con servicios al iniciar app
+ */
+func ServicesInit() []*service {
 
-	servicioUno := NewService(1, "Cambio de aceite", 50000)
-	servicioDos := NewService(2, "Rotación de neumáticos", 30000)
-	servicioTres := NewService(3, "Alineación de ruedas", 14000)
-	servicioCuatro := NewService(4, "Cambio de bujías", 11000)
-	servicioCinco := NewService(5, "Cambio de batería", 5000)
-	servicioSeis := NewService(6, "Revisión de frenos", 34000)
+	servicioUno := newService(1, "Cambio de aceite", 50000)
+	servicioDos := newService(2, "Rotación de neumáticos", 30000)
+	servicioTres := newService(3, "Alineación de ruedas", 14000)
+	servicioCuatro := newService(4, "Cambio de bujías", 11000)
+	servicioCinco := newService(5, "Cambio de batería", 5000)
+	servicioSeis := newService(6, "Revisión de frenos", 34000)
 
 	ServicesArr = append(ServicesArr, servicioUno)
 	ServicesArr = append(ServicesArr, servicioDos)
@@ -68,14 +74,15 @@ func ServicesConstuct() []Service {
 	return ServicesArr
 }
 
-func ListServices() {
+/*
+ * Lista todos los servicios
+ */
+func listServices() {
 	utils.ClearConsole()
 
-	// Crea tabs
 	w := utils.CreateTabs()
 
-	// Mostrar servicios disponibles
-	fmt.Println("Seleccione el servicio: ")
+	fmt.Println("Servicios de la empresa: ")
 	fmt.Fprintln(w, "\nID\tNombre\tPrecio")
 	for _, svc := range ServicesArr {
 		fmt.Fprintf(w, "%d\t%s\t%d\n", svc.Id, svc.Name, svc.Price)
@@ -84,6 +91,9 @@ func ListServices() {
 	w.Flush()
 }
 
+/*
+ * Agrega un nuevo servicio en la colección
+ */
 func createServices() {
 	utils.ClearConsole()
 
@@ -96,16 +106,19 @@ func createServices() {
 	fmt.Print("Introduzca el precio del servicio: ")
 	fmt.Scanln(&price)
 
-	newServiceInput := NewService(ServicesArr[len(ServicesArr)-1].Id+1, name, price)
+	newServiceInput := newService(ServicesArr[len(ServicesArr)-1].Id+1, name, price)
 	ServicesArr = append(ServicesArr, newServiceInput)
 
 }
 
+/*
+ * Hace un hard delete de un servicio por ID
+ */
 func deleteServices() {
 	var idInput string
 	flag := false
 
-	ListServices()
+	listServices()
 
 	fmt.Print("\nIntroduzca el ID del servicio a eliminar: ")
 	fmt.Scanln(&idInput)
@@ -133,12 +146,14 @@ func deleteServices() {
 	utils.ClearConsole()
 }
 
-func Services() {
+/*
+ * Crea opciones de servicios
+ */
+func ServicesOpt() {
 	utils.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	// Crea menú para opciones de la aplicación
 	for {
 		fmt.Println("Seleccione una opción: ")
 		fmt.Println("1. Listar servicios")
@@ -152,12 +167,13 @@ func Services() {
 
 		switch option {
 		case "1":
-			ListServices()
+			listServices()
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "2":
 			createServices()
-			ListServices()
+			listServices()
+			fmt.Println("\nServicio agregado!")
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "3":
@@ -170,8 +186,6 @@ func Services() {
 			utils.PausedConsole()
 			utils.ClearConsole()
 		}
-
-		fmt.Println()
 	}
 
 }

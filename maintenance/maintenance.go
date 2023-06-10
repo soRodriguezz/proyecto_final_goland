@@ -1,42 +1,45 @@
 package maintenance
 
 import (
+	"bufio"
 	"fmt"
-	"proyecto_final_goland/utils"
-	"proyecto_final_goland/vehicle"
+	"os"
+	"proyecto_final_goland/customer"
 	"proyecto_final_goland/service"
 	"proyecto_final_goland/shop"
-	"proyecto_final_goland/customer"
-	"time"
-	"bufio"
-	"os"
+	"proyecto_final_goland/utils"
+	"proyecto_final_goland/vehicle"
 	"strconv"
+	"time"
 )
 
-var MaintenanceArr []Maintenance
+var MaintenanceArr []*maintenance
 
-type Maintenance struct {
-	Id              int
-	Patente					string
-	IntervalHours   float64
-	ServiceTime     time.Time
-	Interval        time.Duration
-	NameCustomer    string
-	PhoneCustomer   string
-	Service					string
-	Shop						string
-	ServicePrice		int
-	Finished        bool
+type maintenance struct {
+	Id            int
+	Patente       string
+	IntervalHours float64
+	ServiceTime   time.Time
+	Interval      time.Duration
+	NameCustomer  string
+	PhoneCustomer string
+	Service       string
+	Shop          string
+	ServicePrice  int
+	Finished      bool
 }
 
-func CreateMaintenance() {
+/*
+ * Crear nuevo mantenimiento
+ */
+func createMaintenance() {
 	var patente string
 	var intervalHoursResult float64
 	var nameCustomerResult string
 	var phoneCustomerResult string
 	var id int = 1
 
-	if len(MaintenanceArr) > 0  {
+	if len(MaintenanceArr) > 0 {
 		id = MaintenanceArr[len(MaintenanceArr)-1].Id + 1
 	}
 
@@ -51,29 +54,27 @@ func CreateMaintenance() {
 	fmt.Print("Introduzca su nombre para asociar el servicio: ")
 	fmt.Scanln(&nameCustomerResult)
 
-	fmt.Print("Introduzca su telefono para asociar a su servicio (9 caracteres): ")
+	fmt.Print("Introduzca su telefono para asociar a su servicio: ")
 	fmt.Scanln(&phoneCustomerResult)
 
 	intervalResult := time.Duration(intervalHoursResult) * time.Hour
 
-	// Obtener servicio seleccionado
 	serviceSelect := service.MaintenanceService()
 
-	// Obtener tienda seleccionada
-	shopSelect := shop.MaintenanceShop()
+	shopSelect := *shop.MaintenanceShop()
 	utils.ClearConsole()
 
-	maintenance := Maintenance{
-		Id:							 id,
-		Patente:         patente,
-		ServiceTime: 		 serviceTimeResult,
-		Interval:        intervalResult,
-		NameCustomer:    nameCustomerResult,
-		PhoneCustomer:   phoneCustomerResult,
-		Service:				 serviceSelect.Name,
-		Shop:            shopSelect.Name,
-		ServicePrice:    serviceSelect.Price,
-		Finished:				 false,
+	maintenance := &maintenance{
+		Id:            id,
+		Patente:       patente,
+		ServiceTime:   serviceTimeResult,
+		Interval:      intervalResult,
+		NameCustomer:  nameCustomerResult,
+		PhoneCustomer: phoneCustomerResult,
+		Service:       serviceSelect.Name,
+		Shop:          shopSelect.Name,
+		ServicePrice:  serviceSelect.Price,
+		Finished:      false,
 	}
 
 	MaintenanceArr = append(MaintenanceArr, maintenance)
@@ -85,8 +86,11 @@ func CreateMaintenance() {
 	customer.CustomerArr = append(customer.CustomerArr, newCustomer)
 }
 
-func FinishMaintenance() {
-	ListMaintenance()
+/*
+ * Finzalizar un mantenimiento por id
+ */
+func finishMaintenance() {
+	pendingMaintenance()
 
 	var id string
 
@@ -104,11 +108,12 @@ func FinishMaintenance() {
 
 }
 
-func ListMaintenance() {
-	// Crea tabs
+/*
+ * Listar mantenciones pendientes
+ */
+func pendingMaintenance() {
 	w := utils.CreateTabs()
 
-	// Mostrar mantenimiento programado después de agregar nuevo vehículo y finalizar un mantenimiento
 	fmt.Fprintln(w, "\nID Vehiculo\tCosto\tHora Inicio\tDuración\tNombre\tTelefono\tServicio\tTienda")
 	for _, m := range MaintenanceArr {
 		if !m.Finished {
@@ -119,23 +124,27 @@ func ListMaintenance() {
 	w.Flush()
 }
 
-func AllMaintenance() {
-		// Crea tabs
-		w := utils.CreateTabs()
+/*
+ * Listar todas las mantenciones
+ */
+func allMaintenance() {
+	w := utils.CreateTabs()
 
-		// Mostrar mantenimiento programado después de agregar nuevo vehículo y finalizar un mantenimiento
-		fmt.Fprintln(w, "\nID Vehiculo\tFinalizado\tCosto\tHora Inicio\tDuración\tNombre\tTelefono\tServicio\tTienda")
-		for _, m := range MaintenanceArr {
-			var finished string = "NO"
-			if m.Finished {
-				finished = "SI"
-			}
-			fmt.Fprintf(w, "%d\t%s\t%s\t%d\t%s\t%.0f minutos\t%s\t%s\t%s\t%s\n", m.Id, m.Patente, finished, m.ServicePrice, m.ServiceTime.Format("02-01-2006 15:04:05"), m.Interval.Minutes(), m.NameCustomer, m.PhoneCustomer, m.Service, m.Shop)
+	fmt.Fprintln(w, "Patente\tFinalizado\tCosto\tHora Inicio\tDuración\tNombre\tTelefono\tServicio\tTienda")
+	for _, m := range MaintenanceArr {
+		var finished string = "NO"
+		if m.Finished {
+			finished = "SI"
 		}
-		w.Flush()
+		fmt.Fprintf(w, "%s\t%s\t%d\t%s\t%.0f minutos\t%s\t%s\t%s\t%s\n", m.Patente, finished, m.ServicePrice, m.ServiceTime.Format("02-01-2006 15:04:05"), m.Interval.Minutes(), m.NameCustomer, m.PhoneCustomer, m.Service, m.Shop)
+	}
+	w.Flush()
 }
 
-func Maintenances() {
+/*
+ * Opciones de mantenciones
+ */
+func MaintenancesOpt() {
 	utils.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -155,23 +164,23 @@ func Maintenances() {
 		switch option {
 		case "1":
 			utils.ClearConsole()
-			CreateMaintenance()
+			createMaintenance()
 			fmt.Println("Mantenimiento agendado!")
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "2":
 			utils.ClearConsole()
-			ListMaintenance()
+			pendingMaintenance()
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "3":
 			utils.ClearConsole()
-			FinishMaintenance()
+			finishMaintenance()
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "4":
 			utils.ClearConsole()
-			AllMaintenance()
+			allMaintenance()
 			utils.PausedConsole()
 			utils.ClearConsole()
 		case "5":
@@ -182,8 +191,6 @@ func Maintenances() {
 			utils.PausedConsole()
 			utils.ClearConsole()
 		}
-
-		fmt.Println()
 	}
 
 }

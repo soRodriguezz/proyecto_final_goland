@@ -21,17 +21,3 @@ func NewVehicle(id string, timeService time.Time, interval time.Duration) Vehicl
 func (v *Vehicle) NeedsService(currentTime time.Time) bool {
 	return currentTime.Sub(v.LastService) > v.ServiceInterval
 }
-
-
-// func NewMaintenance(id string, startTime time.Time, duration time.Duration) *Maintenance {
-// 	return &Maintenance{
-// 		ID:        id,
-// 		StartTime: startTime,
-// 		Duration:  duration,
-// 		Finished:  false,
-// 	}
-// }
-
-// func (m *Maintenance) FinishMaintenance() {
-// 	m.Finished = true
-// }

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"proyecto_final_goland/customer"
 	"proyecto_final_goland/maintenance"
 	"proyecto_final_goland/service"
 	"proyecto_final_goland/shop"
@@ -13,14 +14,13 @@ import (
 func main() {
 	utils.ClearConsole()
 
-	service.ServicesConstuct()
-	shop.ShopConstuct()
+	service.ServicesInit()
+	shop.ShopInit()
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	// Crea menú para opciones de la aplicación
 	for {
-		fmt.Println("=== Sistema de gestión de mantenimiento de flota de vehículos ===")
+		fmt.Println("=== Sistema de agenda de mantención de vehículos ===")
 		fmt.Println("1. Mantenimientos")
 		fmt.Println("2. Servicios")
 		fmt.Println("3. Tiendas")
@@ -34,15 +34,14 @@ func main() {
 
 		switch option {
 		case "1":
-			maintenance.Maintenances()
+			maintenance.MaintenancesOpt()
 		case "2":
-			service.Services()
+			service.ServicesOpt()
 		case "3":
-			shop.Shops()
+			shop.ShopsOpt()
 		case "4":
-			return
+			customer.CustomerOpt()
 		case "5":
-			return
 		case "6":
 			fmt.Println("Saliendo...")
 			return
@@ -51,8 +50,6 @@ func main() {
 			utils.PausedConsole()
 			utils.ClearConsole()
 		}
-
-		fmt.Println()
 	}
 
 }
