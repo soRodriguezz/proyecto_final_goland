@@ -24,7 +24,9 @@ func main() {
 		fmt.Println("1. Mantenimientos")
 		fmt.Println("2. Servicios")
 		fmt.Println("3. Tiendas")
-		fmt.Println("4. Salir")
+		fmt.Println("4. Clientes")
+		fmt.Println("5. Vehiculos")
+		fmt.Println("6. Salir")
 		fmt.Print("Ingrese su opción: ")
 
 		scanner.Scan()
@@ -38,6 +40,10 @@ func main() {
 		case "3":
 			shop.Shops()
 		case "4":
+			return
+		case "5":
+			return
+		case "6":
 			fmt.Println("Saliendo...")
 			return
 		default:
