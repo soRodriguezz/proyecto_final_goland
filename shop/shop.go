@@ -79,6 +79,7 @@ func ShopInit() []*shop {
  * 	Muestra tiendas disponibles de la empresa
  */
 func listShop() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	w := utils.CreateTabs()
@@ -96,6 +97,7 @@ func listShop() {
  * Crea una tienda nueva para la empresa
  */
 func createShop() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	var name string
@@ -116,6 +118,7 @@ func createShop() {
  * Hace un hard delete para una tienda de la empresa
  */
 func deleteShop() {
+	utils := utils.UtilsImpl{}
 	var idInput string
 	flag := false
 
@@ -150,6 +153,7 @@ func deleteShop() {
  * Crea menu de opciones de las tiendas
  */
 func ShopsOpt() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)

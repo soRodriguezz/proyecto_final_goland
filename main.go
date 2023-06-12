@@ -12,6 +12,8 @@ import (
 )
 
 func main() {
+	utils := utils.UtilsImpl{}
+
 	utils.ClearConsole()
 
 	service.ServicesInit()
@@ -20,6 +22,7 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
+
 		fmt.Println("=== Sistema de agenda de mantención de vehículos ===")
 		fmt.Println("1. Mantenimientos")
 		fmt.Println("2. Servicios")

@@ -78,6 +78,7 @@ func ServicesInit() []*service {
  * Lista todos los servicios
  */
 func listServices() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	w := utils.CreateTabs()
@@ -95,6 +96,7 @@ func listServices() {
  * Agrega un nuevo servicio en la colección
  */
 func createServices() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	var name string
@@ -115,6 +117,7 @@ func createServices() {
  * Hace un hard delete de un servicio por ID
  */
 func deleteServices() {
+	utils := utils.UtilsImpl{}
 	var idInput string
 	flag := false
 
@@ -150,6 +153,7 @@ func deleteServices() {
  * Crea opciones de servicios
  */
 func ServicesOpt() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)

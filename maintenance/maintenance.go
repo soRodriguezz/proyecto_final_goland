@@ -33,6 +33,7 @@ type maintenance struct {
  * Crear nuevo mantenimiento
  */
 func createMaintenance() {
+	utils := utils.UtilsImpl{}
 	var patente string
 	var intervalHoursResult float64
 	var nameCustomerResult string
@@ -112,6 +113,7 @@ func finishMaintenance() {
  * Listar mantenciones pendientes
  */
 func pendingMaintenance() {
+	utils := utils.UtilsImpl{}
 	w := utils.CreateTabs()
 
 	fmt.Fprintln(w, "\nID Vehiculo\tCosto\tHora Inicio\tDuración\tNombre\tTelefono\tServicio\tTienda")
@@ -128,6 +130,7 @@ func pendingMaintenance() {
  * Listar todas las mantenciones
  */
 func allMaintenance() {
+	utils := utils.UtilsImpl{}
 	w := utils.CreateTabs()
 
 	fmt.Fprintln(w, "Patente\tFinalizado\tCosto\tHora Inicio\tDuración\tNombre\tTelefono\tServicio\tTienda")
@@ -145,6 +148,7 @@ func allMaintenance() {
  * Opciones de mantenciones
  */
 func MaintenancesOpt() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)

@@ -26,6 +26,7 @@ func NewCustomer(name string, phone string) Customer {
  * Lista todos los clientes sin mostrar los nombres repetidos
  */
 func listCustomers() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 	if len(CustomerArr) != 0 {
 		w := utils.CreateTabs()
@@ -54,6 +55,7 @@ func listCustomers() {
  * Crea opciones de clientes
  */
 func CustomerOpt() {
+	utils := utils.UtilsImpl{}
 	utils.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)
