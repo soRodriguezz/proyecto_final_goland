@@ -11,24 +11,26 @@ import (
 	"proyecto_final_goland/utils"
 )
 
-func main() {
-	utils := utils.UtilsImpl{}
+// Declara una variable global para la instancia de Utils.
+var utilsImpl utils.Utils
 
-	utils.ClearConsole()
+func main() {
+	utilsImpl = utils.NewUtils()
+
+	utilsImpl.ClearConsole()
 
 	service.ServicesInit()
-	shop.ShopInit()
+	shop.InitShops()
 
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
-
 		fmt.Println("=== Sistema de agenda de mantención de vehículos ===")
 		fmt.Println("1. Mantenimientos")
 		fmt.Println("2. Servicios")
 		fmt.Println("3. Tiendas")
 		fmt.Println("4. Clientes")
-		fmt.Println("5. Vehiculos")
+		fmt.Println("5. Vehículos")
 		fmt.Println("6. Salir")
 		fmt.Print("Ingrese su opción: ")
 
@@ -39,20 +41,20 @@ func main() {
 		case "1":
 			maintenance.MaintenancesOpt()
 		case "2":
-			service.ServicesOpt()
+			service.ServicesOptions()
 		case "3":
-			shop.ShopsOpt()
+			shop.ShopsOptions()
 		case "4":
-			customer.CustomerOpt()
+			customer.CustomerOptions()
 		case "5":
+			// Parece que falta algo aquí.
 		case "6":
 			fmt.Println("Saliendo...")
 			return
 		default:
 			fmt.Println("Opción inválida")
-			utils.PausedConsole()
-			utils.ClearConsole()
+			utilsImpl.PausedConsole()
+			utilsImpl.ClearConsole()
 		}
 	}
-
 }
