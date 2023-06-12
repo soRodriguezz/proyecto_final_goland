@@ -11,7 +11,6 @@ import (
 	"proyecto_final_goland/utils"
 )
 
-// Declara una variable global para la instancia de Utils.
 var utilsImpl utils.Utils
 
 func main() {
@@ -30,8 +29,7 @@ func main() {
 		fmt.Println("2. Servicios")
 		fmt.Println("3. Tiendas")
 		fmt.Println("4. Clientes")
-		fmt.Println("5. Vehículos")
-		fmt.Println("6. Salir")
+		fmt.Println("5. Salir")
 		fmt.Print("Ingrese su opción: ")
 
 		scanner.Scan()
@@ -47,8 +45,6 @@ func main() {
 		case "4":
 			customer.CustomerOptions()
 		case "5":
-			// Parece que falta algo aquí.
-		case "6":
 			fmt.Println("Saliendo...")
 			return
 		default:

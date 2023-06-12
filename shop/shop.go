@@ -27,7 +27,9 @@ func NewShop(id int, name, location string) *Shop {
 	}
 }
 
-// SelectShop gets the object of a shop by ID
+/*
+ * Selecciona una tienda por ID
+ */
 func SelectShop() *Shop {
 	var idShop string
 	var shopSelect *Shop
@@ -58,7 +60,9 @@ func SelectShop() *Shop {
 	return NewShop(shopSelect.Id, shopSelect.Name, shopSelect.Location)
 }
 
-// InitShops creates start object to fill shops
+/*
+ * Crea un registros de tiendas al iniciar la app
+ */
 func InitShops() []*Shop {
 	ShopsArr = append(ShopsArr,
 		NewShop(1, "Centro de Servicio Automotriz 'Autotec'", "Santiago, Chile"),
@@ -72,7 +76,9 @@ func InitShops() []*Shop {
 	return ShopsArr
 }
 
-// ListShops shows available shops of the company
+/*
+ * Listar todas las tiendas
+ */
 func ListShops() {
 	utilsImpl.ClearConsole()
 
@@ -87,7 +93,9 @@ func ListShops() {
 	w.Flush()
 }
 
-// CreateShop creates a new shop for the company
+/*
+ * Crea una nueva tienda
+ */
 func CreateShop() {
 	utilsImpl.ClearConsole()
 
@@ -102,7 +110,9 @@ func CreateShop() {
 	ShopsArr = append(ShopsArr, NewShop(len(ShopsArr)+1, name, location))
 }
 
-// DeleteShop performs a hard delete for a shop of the company
+/*
+ * Elimina una tienda
+ */
 func DeleteShop() {
 	var idInput string
 
@@ -130,7 +140,9 @@ func DeleteShop() {
 	utilsImpl.ClearConsole()
 }
 
-// ShopsMenu creates menu of shop options
+/*
+ * Crea un menu de opciones para tiendas
+ */
 func ShopsOptions() {
 	utilsImpl.ClearConsole()
 

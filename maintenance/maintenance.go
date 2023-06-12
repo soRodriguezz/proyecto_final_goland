@@ -14,7 +14,7 @@ import (
 )
 
 var MaintenanceArr []*Maintenance
-var utilsImpl utils.Utils // Crea la instancia aquí y reúsala
+var utilsImpl utils.Utils
 
 type Maintenance struct {
 	Id            int
@@ -30,7 +30,6 @@ type Maintenance struct {
 	Finished      bool
 }
 
-// init se llama automáticamente al importar el paquete.
 func init() {
 	utilsImpl = utils.NewUtils()
 }

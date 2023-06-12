@@ -25,7 +25,9 @@ func NewService(id int, name string, price int) *Service {
 	}
 }
 
-// MaintenanceService selects a service object by ID
+/*
+ * Selecciona un servicio por ID
+ */
 func MaintenanceService() *Service {
 	var idService string
 	var serviceSelect Service
@@ -55,7 +57,9 @@ func MaintenanceService() *Service {
 	}
 }
 
-// ServicesInit fills the collection with services at app startup
+/*
+ * Inserta registros de servicios al iniciar la app
+ */
 func ServicesInit() []*Service {
 
 	servicioUno := NewService(1, "Cambio de aceite", 50000)
@@ -70,7 +74,9 @@ func ServicesInit() []*Service {
 	return ServicesArr
 }
 
-// ListServices lists all services
+/*
+ * Listar todos los servicios
+ */
 func ListServices() {
 	utilsImpl.ClearConsole()
 
@@ -85,7 +91,9 @@ func ListServices() {
 	w.Flush()
 }
 
-// CreateServices adds a new service to the collection
+/*
+ * Crea un nuevo servicio
+ */
 func CreateServices() {
 	utilsImpl.ClearConsole()
 
@@ -103,7 +111,9 @@ func CreateServices() {
 
 }
 
-// DeleteServices removes a service by ID
+/*
+ * Elimina un servicio por ID
+ */
 func DeleteServices() {
 	var idInput string
 	flag := false
@@ -140,7 +150,9 @@ func DeleteServices() {
 	utilsImpl.ClearConsole()
 }
 
-// ServicesOpt creates service options
+/*
+ * Crea un menu de opciones para los servicios
+ */
 func ServicesOptions() {
 	utilsImpl.ClearConsole()
 

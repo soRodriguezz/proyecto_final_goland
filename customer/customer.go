@@ -6,15 +6,15 @@ import (
 	"strings"
 )
 
-type CustomerUtils interface {
-	ListCustomers()
-	CustomerOptions()
-}
-
 var (
 	CustomerArr []Customer
 	utilsImpl   = utils.UtilsImpl{}
 )
+
+type CustomerUtils interface {
+	ListCustomers()
+	CustomerOptions()
+}
 
 type Customer struct {
 	Name  string
@@ -28,7 +28,9 @@ func NewCustomer(name string, phone string) Customer {
 	}
 }
 
-// ListCustomers lists all customers without displaying repeated names.
+/*
+ * Listar todos los clientes
+ */
 func ListCustomers() {
 	utilsImpl.ClearConsole()
 	if len(CustomerArr) != 0 {
@@ -53,7 +55,9 @@ func ListCustomers() {
 	}
 }
 
-// CustomerOptions creates customer options.
+/*
+ * Crea menu con opciones de clientes
+ */
 func CustomerOptions() {
 	utilsImpl.ClearConsole()
 
