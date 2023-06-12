@@ -1,14 +1,20 @@
 package customer
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"proyecto_final_goland/utils"
 	"strings"
 )
 
-var CustomerArr []Customer
+type CustomerUtils interface {
+	ListCustomers()
+	CustomerOptions()
+}
+
+var (
+	CustomerArr []Customer
+	utilsImpl   = utils.UtilsImpl{}
+)
 
 type Customer struct {
 	Name  string
@@ -22,19 +28,15 @@ func NewCustomer(name string, phone string) Customer {
 	}
 }
 
-/*
- * Lista todos los clientes sin mostrar los nombres repetidos
- */
-func listCustomers() {
-	utils := utils.UtilsImpl{}
-	utils.ClearConsole()
+// ListCustomers lists all customers without displaying repeated names.
+func ListCustomers() {
+	utilsImpl.ClearConsole()
 	if len(CustomerArr) != 0 {
-		w := utils.CreateTabs()
+		w := utilsImpl.CreateTabs()
 
 		fmt.Println("Clientes en nuestros registros: ")
 		fmt.Fprintln(w, "\nNombre\tTelefono")
 
-		// Mapa para realizar un seguimiento de los nombres ya mostrados
 		seenNames := make(map[string]bool)
 
 		for _, cus := range CustomerArr {
@@ -51,14 +53,11 @@ func listCustomers() {
 	}
 }
 
-/*
- * Crea opciones de clientes
- */
-func CustomerOpt() {
-	utils := utils.UtilsImpl{}
-	utils.ClearConsole()
+// CustomerOptions creates customer options.
+func CustomerOptions() {
+	utilsImpl.ClearConsole()
 
-	scanner := bufio.NewScanner(os.Stdin)
+	var option string
 
 	for {
 		fmt.Println("Seleccione una opción: ")
@@ -66,22 +65,23 @@ func CustomerOpt() {
 		fmt.Println("2. Salir")
 		fmt.Print("Ingrese su opción: ")
 
-		scanner.Scan()
-		option := scanner.Text()
+		if _, err := fmt.Scanln(&option); err != nil {
+			fmt.Println("Ocurrió un error al leer la entrada. Por favor intente de nuevo.")
+			continue
+		}
 
 		switch option {
 		case "1":
-			listCustomers()
-			utils.PausedConsole()
-			utils.ClearConsole()
+			ListCustomers()
+			utilsImpl.PausedConsole()
+			utilsImpl.ClearConsole()
 		case "2":
-			utils.ClearConsole()
+			utilsImpl.ClearConsole()
 			return
 		default:
 			fmt.Println("Opción inválida")
-			utils.PausedConsole()
-			utils.ClearConsole()
+			utilsImpl.PausedConsole()
+			utilsImpl.ClearConsole()
 		}
 	}
-
 }

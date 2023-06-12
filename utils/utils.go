@@ -15,6 +15,10 @@ type Utils interface {
 
 type UtilsImpl struct{}
 
+func NewUtils() Utils {
+	return &UtilsImpl{}
+}
+
 func (c UtilsImpl) PausedConsole() {
 	fmt.Println("\nPresione Enter para continuar...")
 	fmt.Scanln()

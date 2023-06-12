@@ -8,100 +8,90 @@ import (
 	"strconv"
 )
 
-var ShopsArr []*shop
+var (
+	ShopsArr  []*Shop
+	utilsImpl = utils.UtilsImpl{}
+)
 
-type shop struct {
+type Shop struct {
 	Id       int
 	Name     string
 	Location string
 }
 
-func newShop(id int, name string, location string) *shop {
-	return &shop{
+func NewShop(id int, name, location string) *Shop {
+	return &Shop{
 		Id:       id,
 		Name:     name,
 		Location: location,
 	}
 }
 
-/*
- * Obtiene el objeto de una tienda por ID
- */
-func MaintenanceShop() *shop {
+// SelectShop gets the object of a shop by ID
+func SelectShop() *Shop {
 	var idShop string
-	var shopSelect *shop
+	var shopSelect *Shop
 
-	listShop()
+	ListShops()
 
 	fmt.Print("\nIntroduzca el ID de la tienda a seleccionar: ")
 	fmt.Scanln(&idShop)
 
-	id, _ := strconv.Atoi(idShop)
+	id, err := strconv.Atoi(idShop)
+	if err != nil {
+		fmt.Println("Error: input must be a number")
+		return nil
+	}
 
-	for i := 0; i < len(ShopsArr); i++ {
-		if ShopsArr[i].Id == id {
-			shopSelect = ShopsArr[i]
+	for _, shop := range ShopsArr {
+		if shop.Id == id {
+			shopSelect = shop
 			break
 		}
 	}
 
-	return &shop{
-		Id:       shopSelect.Id,
-		Name:     shopSelect.Name,
-		Location: shopSelect.Location,
+	if shopSelect == nil {
+		fmt.Println("Error: shop not found")
+		return nil
 	}
+
+	return NewShop(shopSelect.Id, shopSelect.Name, shopSelect.Location)
 }
 
-/*
- * Crea objeto de inicio para rellenar tiendas
- */
-func ShopInit() []*shop {
-	shopUno := newShop(1, "Centro de Servicio Automotriz 'Autotec'", "Santiago, Chile")
-	shopDos := newShop(2, "Taller Mecánico 'Mecánica Rápida'", "Valparaíso, Chile")
-	shopTres := newShop(3, "Garaje 'Mantenimiento Total'", "Concepción, Chile")
-	shopCuatro := newShop(4, "Centro de Mantenimiento y Reparación 'AutoCare'", "Temuco, Chile")
-	shopCinco := newShop(5, "Tienda de Servicio Rápido 'Soluciones Automotrices'", "Antofagasta, Chile")
-	shopSeis := newShop(6, "Mecánica 'El Motorista'", "Viña del Mar, Chile")
-	shopSiete := newShop(7, "Taller de Servicio Técnico 'La Excelencia'", "La Serena, Chile")
-
-	ShopsArr = append(ShopsArr, shopUno)
-	ShopsArr = append(ShopsArr, shopDos)
-	ShopsArr = append(ShopsArr, shopTres)
-	ShopsArr = append(ShopsArr, shopCuatro)
-	ShopsArr = append(ShopsArr, shopCinco)
-	ShopsArr = append(ShopsArr, shopSeis)
-	ShopsArr = append(ShopsArr, shopSiete)
-
+// InitShops creates start object to fill shops
+func InitShops() []*Shop {
+	ShopsArr = append(ShopsArr,
+		NewShop(1, "Centro de Servicio Automotriz 'Autotec'", "Santiago, Chile"),
+		NewShop(2, "Taller Mecánico 'Mecánica Rápida'", "Valparaíso, Chile"),
+		NewShop(3, "Garaje 'Mantenimiento Total'", "Concepción, Chile"),
+		NewShop(4, "Centro de Mantenimiento y Reparación 'AutoCare'", "Temuco, Chile"),
+		NewShop(5, "Tienda de Servicio Rápido 'Soluciones Automotrices'", "Antofagasta, Chile"),
+		NewShop(6, "Mecánica 'El Motorista'", "Viña del Mar, Chile"),
+		NewShop(7, "Taller de Servicio Técnico 'La Excelencia'", "La Serena, Chile"),
+	)
 	return ShopsArr
 }
 
-/*
- * 	Muestra tiendas disponibles de la empresa
- */
-func listShop() {
-	utils := utils.UtilsImpl{}
-	utils.ClearConsole()
+// ListShops shows available shops of the company
+func ListShops() {
+	utilsImpl.ClearConsole()
 
-	w := utils.CreateTabs()
+	w := utilsImpl.CreateTabs()
 
 	fmt.Println("Tiendas operativas: ")
 	fmt.Fprintln(w, "\nID\tNombre\tDirección")
-	for _, svc := range ShopsArr {
-		fmt.Fprintf(w, "%d\t%s\t%s\n", svc.Id, svc.Name, svc.Location)
+	for _, shop := range ShopsArr {
+		fmt.Fprintf(w, "%d\t%s\t%s\n", shop.Id, shop.Name, shop.Location)
 	}
 
 	w.Flush()
 }
 
-/*
- * Crea una tienda nueva para la empresa
- */
-func createShop() {
-	utils := utils.UtilsImpl{}
-	utils.ClearConsole()
+// CreateShop creates a new shop for the company
+func CreateShop() {
+	utilsImpl.ClearConsole()
 
-	var name string
-	var location string
+	var name, location string
 
 	fmt.Print("Introduzca el nombre de la tienda: ")
 	fmt.Scanln(&name)
@@ -109,56 +99,43 @@ func createShop() {
 	fmt.Print("Introduzca la ubicación de la tienda: ")
 	fmt.Scanln(&location)
 
-	newShopInput := newShop(ShopsArr[len(ShopsArr)-1].Id+1, name, location)
-	ShopsArr = append(ShopsArr, newShopInput)
-
+	ShopsArr = append(ShopsArr, NewShop(len(ShopsArr)+1, name, location))
 }
 
-/*
- * Hace un hard delete para una tienda de la empresa
- */
-func deleteShop() {
-	utils := utils.UtilsImpl{}
+// DeleteShop performs a hard delete for a shop of the company
+func DeleteShop() {
 	var idInput string
-	flag := false
 
-	listShop()
+	ListShops()
 
 	fmt.Print("\nIntroduzca el ID de la tienda a eliminar: ")
 	fmt.Scanln(&idInput)
 
-	id, _ := strconv.Atoi(idInput)
+	id, err := strconv.Atoi(idInput)
+	if err != nil {
+		fmt.Println("Error: input must be a number")
+		return
+	}
 
-	for i := 0; i < len(ShopsArr); i++ {
-		if ShopsArr[i].Id == id {
-			flag = true
+	for i, shop := range ShopsArr {
+		if shop.Id == id {
 			ShopsArr = append(ShopsArr[:i], ShopsArr[i+1:]...)
-			break
+			fmt.Printf("\nTienda con ID %d eliminada!\n", id)
+			return
 		}
 	}
 
-	if flag {
-		utils.ClearConsole()
-		fmt.Printf("\nTienda con ID %d eliminada!\n", id)
-	} else {
-		utils.ClearConsole()
-		fmt.Printf("\nTienda con ID %d no encontrada\n", id)
-	}
-
-	utils.PausedConsole()
-	utils.ClearConsole()
+	fmt.Printf("\nTienda con ID %d no encontrada\n", id)
+	utilsImpl.PausedConsole()
+	utilsImpl.ClearConsole()
 }
 
-/*
- * Crea menu de opciones de las tiendas
- */
-func ShopsOpt() {
-	utils := utils.UtilsImpl{}
-	utils.ClearConsole()
+// ShopsMenu creates menu of shop options
+func ShopsOptions() {
+	utilsImpl.ClearConsole()
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	// Crea menú para opciones de la aplicación
 	for {
 		fmt.Println("Seleccione una opción: ")
 		fmt.Println("1. Listar tiendas")
@@ -172,24 +149,24 @@ func ShopsOpt() {
 
 		switch option {
 		case "1":
-			listShop()
-			utils.PausedConsole()
-			utils.ClearConsole()
+			ListShops()
+			utilsImpl.PausedConsole()
+			utilsImpl.ClearConsole()
 		case "2":
-			createShop()
-			listShop()
+			CreateShop()
+			ListShops()
 			fmt.Println("\nTienda agregada!")
-			utils.PausedConsole()
-			utils.ClearConsole()
+			utilsImpl.PausedConsole()
+			utilsImpl.ClearConsole()
 		case "3":
-			deleteShop()
+			DeleteShop()
 		case "4":
-			utils.ClearConsole()
+			utilsImpl.ClearConsole()
 			return
 		default:
 			fmt.Println("Opción inválida")
-			utils.PausedConsole()
-			utils.ClearConsole()
+			utilsImpl.PausedConsole()
+			utilsImpl.ClearConsole()
 		}
 	}
 }

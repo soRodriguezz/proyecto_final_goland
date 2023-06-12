@@ -13,9 +13,10 @@ import (
 	"time"
 )
 
-var MaintenanceArr []*maintenance
+var MaintenanceArr []*Maintenance
+var utilsImpl utils.Utils // Crea la instancia aquí y reúsala
 
-type maintenance struct {
+type Maintenance struct {
 	Id            int
 	Patente       string
 	IntervalHours float64
@@ -29,11 +30,15 @@ type maintenance struct {
 	Finished      bool
 }
 
+// init se llama automáticamente al importar el paquete.
+func init() {
+	utilsImpl = utils.NewUtils()
+}
+
 /*
  * Crear nuevo mantenimiento
  */
 func createMaintenance() {
-	utils := utils.UtilsImpl{}
 	var patente string
 	var intervalHoursResult float64
 	var nameCustomerResult string
@@ -62,10 +67,10 @@ func createMaintenance() {
 
 	serviceSelect := service.MaintenanceService()
 
-	shopSelect := *shop.MaintenanceShop()
-	utils.ClearConsole()
+	shopSelect := *shop.SelectShop()
+	utilsImpl.ClearConsole()
 
-	maintenance := &maintenance{
+	maintenance := &Maintenance{
 		Id:            id,
 		Patente:       patente,
 		ServiceTime:   serviceTimeResult,
