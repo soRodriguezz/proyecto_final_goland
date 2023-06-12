@@ -60,7 +60,7 @@ func MaintenanceService() *Service {
 /*
  * Inserta registros de servicios al iniciar la app
  */
-func ServicesInit() []*Service {
+func InitServices() []*Service {
 
 	servicioUno := NewService(1, "Cambio de aceite", 50000)
 	servicioDos := NewService(2, "Rotación de neumáticos", 30000)

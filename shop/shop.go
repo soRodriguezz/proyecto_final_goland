@@ -115,6 +115,7 @@ func CreateShop() {
  */
 func DeleteShop() {
 	var idInput string
+	flag := false
 
 	ListShops()
 
@@ -130,14 +131,19 @@ func DeleteShop() {
 	for i, shop := range ShopsArr {
 		if shop.Id == id {
 			ShopsArr = append(ShopsArr[:i], ShopsArr[i+1:]...)
-			fmt.Printf("\nTienda con ID %d eliminada!\n", id)
 			return
 		}
 	}
 
-	fmt.Printf("\nTienda con ID %d no encontrada\n", id)
+	if flag {
+		utilsImpl.ClearConsole()
+		fmt.Printf("\nTienda con ID %d eliminada!\n", id)
+	} else {
+		utilsImpl.ClearConsole()
+		fmt.Printf("\nTienda con ID %d no encontrada\n", id)
+	}
+
 	utilsImpl.PausedConsole()
-	utilsImpl.ClearConsole()
 }
 
 /*
@@ -149,6 +155,7 @@ func ShopsOptions() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
+		utilsImpl.ClearConsole()
 		fmt.Println("Seleccione una opción: ")
 		fmt.Println("1. Listar tiendas")
 		fmt.Println("2. Agregar tienda")

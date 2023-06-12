@@ -9,6 +9,7 @@ import (
 	"proyecto_final_goland/service"
 	"proyecto_final_goland/shop"
 	"proyecto_final_goland/utils"
+	"sync"
 )
 
 var utilsImpl utils.Utils
@@ -18,8 +19,20 @@ func main() {
 
 	utilsImpl.ClearConsole()
 
-	service.ServicesInit()
-	shop.InitShops()
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		service.InitServices()
+		wg.Done()
+	}()
+
+	go func() {
+		shop.InitShops()
+		wg.Done()
+	}()
+
+	wg.Wait()
 
 	scanner := bufio.NewScanner(os.Stdin)
 

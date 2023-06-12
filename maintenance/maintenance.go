@@ -10,11 +10,15 @@ import (
 	"proyecto_final_goland/utils"
 	"proyecto_final_goland/vehicle"
 	"strconv"
+	"sync"
 	"time"
 )
 
 var MaintenanceArr []*Maintenance
 var utilsImpl utils.Utils
+var maintenanceMutex sync.Mutex
+var vehicleMutex sync.Mutex
+var customerMutex sync.Mutex
 
 type Maintenance struct {
 	Id            int
@@ -82,17 +86,25 @@ func createMaintenance() {
 		Finished:      false,
 	}
 
+	maintenanceMutex.Lock()
+	defer maintenanceMutex.Unlock()
 	MaintenanceArr = append(MaintenanceArr, maintenance)
 
 	newVehicle := vehicle.NewVehicle(maintenance.Patente, maintenance.ServiceTime, maintenance.Interval)
+
+	vehicleMutex.Lock()
+	defer vehicleMutex.Unlock()
 	vehicle.VehicleArr = append(vehicle.VehicleArr, newVehicle)
 
 	newCustomer := customer.NewCustomer(maintenance.NameCustomer, maintenance.PhoneCustomer)
+
+	customerMutex.Lock()
+	defer customerMutex.Unlock()
 	customer.CustomerArr = append(customer.CustomerArr, newCustomer)
 }
 
 /*
- * Finzalizar un mantenimiento por id
+ * Finalizar un mantenimiento por id
  */
 func finishMaintenance() {
 	pendingMaintenance()
@@ -104,6 +116,8 @@ func finishMaintenance() {
 
 	idInput, _ := strconv.Atoi(id)
 
+	maintenanceMutex.Lock()
+	defer maintenanceMutex.Unlock()
 	for i := 0; i < len(MaintenanceArr); i++ {
 		if MaintenanceArr[i].Id == idInput {
 			MaintenanceArr[i].Finished = true
