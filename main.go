@@ -8,11 +8,16 @@ import (
 	"proyecto_final_goland/maintenance"
 	"proyecto_final_goland/service"
 	"proyecto_final_goland/shop"
+	"proyecto_final_goland/usecases"
 	"proyecto_final_goland/utils"
 	"sync"
 )
 
 var utilsImpl utils.Utils
+
+func useCaseCreateMaintenance() {
+	usecases.CreateMaintenanceUseCase()
+}
 
 func main() {
 	utilsImpl = utils.NewUtils()
