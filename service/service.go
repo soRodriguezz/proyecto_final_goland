@@ -163,7 +163,7 @@ func ServicesOptions() {
 		fmt.Println("1. Listar servicios")
 		fmt.Println("2. Agregar servicio")
 		fmt.Println("3. Eliminar Servicio")
-		fmt.Println("4. Salir")
+		fmt.Println("4. Volver")
 		fmt.Print("Ingrese su opción: ")
 
 		if _, err := fmt.Scanln(&option); err != nil {

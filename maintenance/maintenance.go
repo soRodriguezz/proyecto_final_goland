@@ -177,7 +177,7 @@ func MaintenancesOpt() {
 		fmt.Println("2. Ver mantenimientos pendientes")
 		fmt.Println("3. Finalizar mantenimiento")
 		fmt.Println("4. Mostrar todos los mantenimientos")
-		fmt.Println("5. Salir")
+		fmt.Println("5. Volver")
 		fmt.Print("Ingrese su opción: ")
 
 		scanner.Scan()

@@ -66,7 +66,7 @@ func CustomerOptions() {
 	for {
 		fmt.Println("Seleccione una opción: ")
 		fmt.Println("1. Listar clientes")
-		fmt.Println("2. Salir")
+		fmt.Println("2. Volver")
 		fmt.Print("Ingrese su opción: ")
 
 		if _, err := fmt.Scanln(&option); err != nil {

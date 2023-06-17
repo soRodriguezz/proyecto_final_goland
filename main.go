@@ -19,6 +19,7 @@ func useCaseCreateMaintenance() {
 	usecases.CreateMaintenanceUseCase()
 }
 
+// El proyecto se trata de una aplicación para manejar la programación de mantenimientos de vehículos.
 func main() {
 	utilsImpl = utils.NewUtils()
 

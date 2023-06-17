@@ -160,7 +160,7 @@ func ShopsOptions() {
 		fmt.Println("1. Listar tiendas")
 		fmt.Println("2. Agregar tienda")
 		fmt.Println("3. Eliminar tienda")
-		fmt.Println("4. Salir")
+		fmt.Println("4. Volver")
 		fmt.Print("Ingrese su opción: ")
 
 		scanner.Scan()
